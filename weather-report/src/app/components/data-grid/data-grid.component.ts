@@ -18,13 +18,16 @@ import {
   styleUrls: ['./data-grid.component.scss']
 })
 export class DataGridComponent implements OnInit {
+  // type any to render any model structure
   @Input() dataToRender$: Observable < any > ;
   @Input() displayedColumns: ColumnProp[];
   @Input() showAction;
+  @Input() buttonLabel;
   @Output() showHourlyDetails: EventEmitter < any > = new EventEmitter();
-  columnsToDisplay = [];
+  public columnsToDisplay = [];
   ngOnInit() {
     this.displayedColumns.forEach(column => this.columnsToDisplay.push(column.prop));
+    // action column is shown or hidden with the inputs
     if (this.showAction) {
       this.columnsToDisplay.push('actions');
     }

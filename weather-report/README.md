@@ -51,6 +51,8 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
             * dataToRender$ - an observable of data to be rendered
             * displayedColumns - list of columns to be rendered (from constant.ts)
             * showAction - to show or hide action button
+            * buttonLabel - label to be shown in the button is rendered
+            
 
     --- has the following events
 
@@ -74,6 +76,10 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
     
         -- it consists of some details lile city names and the columns to render on the data-grid component
     
-    ## shared/selectors.ts - 
+    ## shared/selectors.ts
 
     -- it contains the Ngrx selectors that filter out the details that are to be rendered in the reporting table
+
+    ## shared/async-observable-helpers
+
+    -- unit test mocking async data

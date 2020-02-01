@@ -27,6 +27,7 @@ export class WeatherService {
     CITY_NAMES.forEach((city) => {
       citiesToLoad.push(this.http.get < Weather > ('http://localhost:9000/getWeatherData?cityName=' + city));
     });
+    // forkJoining all the five cities and filtering the cities with status code 200 (removing the failed cities)
     return forkJoin(citiesToLoad).pipe(map((data: Weather[]) => {
       return data.filter(cityWeather => cityWeather.cod === 200);
     }));
