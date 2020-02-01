@@ -41,7 +41,7 @@ import {
 })
 export class WeatherReportComponent implements OnInit, OnDestroy {
   weatherDetails$: Observable < any > ;
-  hourlyWeatherDetails$: Observable < any > ;
+  hourlyCityWeatherDetails$: Observable < any > ;
   hourlyWeatherShown = false;
   displayedWeatherColumns: ColumnProp[] = WEATHER_COLUMNS;
   displayedHourlyColumns: ColumnProp[] = HOURLY_WEATHER_COLUMNS;
@@ -65,7 +65,7 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
     this.store.dispatch(new LoadHourlyWeatherAction({
       cityName: this.citySelected
     }));
-    this.hourlyWeatherDetails$ = this.store.select(hourlyWeatherDetails);
+    this.hourlyCityWeatherDetails$ = this.store.select(hourlyWeatherDetails);
     this.store.select('hourlyWeather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((hourlyWeatherData) => {
       if (!hourlyWeatherData.error) {
         this.dataLoading = hourlyWeatherData.loading;

@@ -18,15 +18,12 @@ import {
 import {
   map
 } from 'rxjs/operators';
-import {
-  SharedService
-} from '../shared/services/shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  constructor(private http: HttpClient, private sharedService: SharedService) {}
+  constructor(private http: HttpClient) {}
   getWeatherData() {
     const citiesToLoad = [];
     CITY_NAMES.forEach((city) => {
