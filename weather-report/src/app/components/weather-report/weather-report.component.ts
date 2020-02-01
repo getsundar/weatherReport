@@ -16,7 +16,8 @@ import {
   LoadHourlyWeatherAction
 } from 'src/app/actions/hourly-weather.actions';
 import {
-  Observable
+  Observable,
+  Subject
 } from 'rxjs';
 import {
   ColumnProp
@@ -29,6 +30,9 @@ import {
   selectWeatherDetails,
   hourlyWeatherDetails
 } from 'src/app/shared/selectors';
+import {
+  takeUntil
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-weather-report',
@@ -43,15 +47,14 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
   displayedHourlyColumns: ColumnProp[] = HOURLY_WEATHER_COLUMNS;
   dataLoading = false;
   citySelected = '';
-  weatherSubscription;
-  hourlyWeatherSubscription;
   errorMessage = '';
   inValidCities = [];
+  private ngUnsubscribe: Subject < void > = new Subject < void > ();
   constructor(private store: Store < AppState > ) {}
   ngOnInit() {
     this.store.dispatch(new LoadWeatherAction());
     this.weatherDetails$ = this.store.select(selectWeatherDetails);
-    this.weatherSubscription = this.store.select('weather').subscribe((weatherData) => {
+    this.store.select('weather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((weatherData) => {
       this.dataLoading = weatherData.loading;
     });
   }
@@ -63,7 +66,7 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
       cityName: this.citySelected
     }));
     this.hourlyWeatherDetails$ = this.store.select(hourlyWeatherDetails);
-    this.hourlyWeatherSubscription = this.store.select('hourlyWeather').subscribe((hourlyWeatherData) => {
+    this.store.select('hourlyWeather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((hourlyWeatherData) => {
       if (!hourlyWeatherData.error) {
         this.dataLoading = hourlyWeatherData.loading;
         if (!this.dataLoading) {
@@ -76,7 +79,7 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.weatherSubscription.unsubscribe();
-    this.hourlyWeatherSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

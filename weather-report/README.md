@@ -38,7 +38,7 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
 
    # app.component 
 
-     ---   weather-report.compoennt lazy loaded in the router-outlet
+     ---   weather-report.component lazy loaded in the router-outlet
 
    # weather-report.component 
 

@@ -16,8 +16,7 @@ import {
   CITY_NAMES
 } from 'src/assets/constants';
 import {
-  map,
-  catchError
+  map
 } from 'rxjs/operators';
 import {
   SharedService
