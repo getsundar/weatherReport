@@ -22,10 +22,7 @@ export class DataGridComponent implements OnInit {
   @Input() displayedColumns: ColumnProp[];
   @Input() showAction;
   @Output() showHourlyDetails: EventEmitter < any > = new EventEmitter();
-
   columnsToDisplay = [];
-  constructor() {}
-
   ngOnInit() {
     this.displayedColumns.forEach(column => this.columnsToDisplay.push(column.prop));
     if (this.showAction) {

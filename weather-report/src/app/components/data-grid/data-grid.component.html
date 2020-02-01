@@ -1,4 +1,4 @@
-<table style="width:100%" mat-table [dataSource]="dataToRender$" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataToRender$" class="mat-elevation-z8 datagrid">
   <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column.prop}}">
     <th mat-header-cell *matHeaderCellDef> {{column.headerName}} </th>
     <td mat-cell *matCellDef="let element"> {{element[column.prop]}} </td>

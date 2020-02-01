@@ -2,15 +2,13 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  HttpClient,
-  HttpErrorResponse
+  HttpClient
 } from '@angular/common/http';
 import {
   Weather
 } from '../models/weather.model';
 import {
-  forkJoin,
-  throwError
+  forkJoin
 } from 'rxjs';
 import {
   CITY_NAMES

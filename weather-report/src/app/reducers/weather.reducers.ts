@@ -19,7 +19,7 @@ const initialState: WeatherState = {
   error: null
 };
 
-export function WeatherReducer(state: WeatherState, action: WeatherAction) {
+export function WeatherReducer(state: WeatherState = initialState, action: WeatherAction) {
   switch (action.type) {
     case WeatherActionTypes.LOAD_WEATHER_DATA:
       return {
