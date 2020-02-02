@@ -8,7 +8,6 @@ import {
   HourlyWeather
 } from '../models/hourly-weather.model';
 
-
 @Injectable({
   providedIn: 'root'
 })

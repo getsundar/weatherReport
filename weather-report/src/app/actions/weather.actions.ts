@@ -5,7 +5,6 @@ import {
   Weather
 } from '../models/weather.model';
 
-
 export enum WeatherActionTypes {
   LOAD_WEATHER_DATA = '[WEATHER] Load Weather',
     LOAD_WEATHER_DATA_SUCCESS = '[WEATHER] Load Weather Success',

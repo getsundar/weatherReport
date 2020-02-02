@@ -28,24 +28,15 @@ import {
   provideMockStore,
   MockStore
 } from '@ngrx/store/testing';
+import {
+  HourlyWeatherState
+} from 'src/app/reducers/hourly-weather.reducers';
+import {
+  LoadHourlyWeatherAction
+} from 'src/app/actions/hourly-weather.actions';
 describe('WeatherReportComponent', () => {
   let weatherComponent: WeatherReportComponent;
   let fixture: ComponentFixture < WeatherReportComponent > ;
-  // const weatherInitialState = {
-  //   weather: [],
-  //   loading: true,
-  //   error: null
-  // };
-  // let store: MockStore < {
-  //   weather: any,
-  //   loading: boolean,
-  //   error: any
-  // } > ;
-  // const weatherInitialState = {
-  //   weather: [],
-  //   loading: true,
-  //   error: null
-  // };
   let store: MockStore < {
     hourlyWeather: any;
     loading: boolean;
@@ -53,6 +44,45 @@ describe('WeatherReportComponent', () => {
   } > ;
   const initialState = {
     hourlyWeather: [],
+    loading: false,
+    error: null
+  };
+  const mockHourlyWeatherState: HourlyWeatherState = {
+    hourlyWeather: {
+      cod: 200,
+      message: 0.0032,
+      cnt: 36,
+      list: [{
+        dt: 1487246400,
+        main: {
+          temp: 286.67,
+          temp_min: 281.556,
+          temp_max: 286.67,
+          pressure: 972.73,
+          sea_level: 1046.46,
+          grnd_level: 972.73,
+          humidity: 75,
+          temp_kf: 5.11
+        },
+        weather: [{
+          id: 800,
+          main: 'Clear',
+          description: 'clear sky',
+          icon: '01d'
+        }],
+        clouds: {
+          all: 0
+        },
+        wind: {
+          speed: 1.81,
+          deg: 247.501
+        },
+        sys: {
+          pod: 'd'
+        },
+        dt_txt: '2017-02-16 12:00:00'
+      }]
+    },
     loading: false,
     error: null
   };
@@ -70,54 +100,27 @@ describe('WeatherReportComponent', () => {
     fixture = TestBed.createComponent(WeatherReportComponent);
     weatherComponent = fixture.componentInstance;
     fixture.detectChanges();
+    store.setState(mockHourlyWeatherState);
   });
 
-  // it('should do something', () => {
-  //   store.setState({
-  //     hourlyWeather: [{
-  //       timeStamp: 10,
-  //       avgTemp: 38,
-  //       windStrength: 39
-  //     }],
-  //     loading: false,
-  //     error: null
-  //   });
+  it('LoadHourlyWeatherAction to be triggered', () => {
+    const expected = of (mockHourlyWeatherState);
+    expected.subscribe(hourlyWeather => {
+      expect(hourlyWeather).toEqual(mockHourlyWeatherState);
+    });
+  });
+  it('should dispatch LoadHourlyWeatherAction called', () => {
+    const appStore = spyOn(store, 'dispatch');
+    weatherComponent.onShowingHourlyDetails('London');
+    expect(appStore).toHaveBeenCalled();
+  });
+  it('should dispatch LoadHourlyWeatherAction with actual action payload', () => {
+    const expectedAction = new LoadHourlyWeatherAction({
+      cityName: 'London'
+    });
+    const appStore = spyOn(store, 'dispatch');
+    weatherComponent.onShowingHourlyDetails('London');
+    expect(appStore).toHaveBeenCalledWith(expectedAction);
+  });
 
-  //   // const expected = cold('-a-|', {
-  //   //   timeStamp: 10,
-  //   //   avgTemp: 38,
-  //   //   windStrength: 39
-  //   // });
-  //   const expected = of ({
-  //     timeStamp: 10,
-  //     avgTemp: 38,
-  //     windStrength: 39
-  //   });
-  //   expected.subscribe(hourlyWeather => {
-  //     expect(hourlyWeather).toEqual({
-  //       timeStamp: 10,
-  //       avgTemp: 38,
-  //       windStrength: 39
-  //     });
-  //   });
-  //  // expect(weatherComponent.onShowingHourlyDetails('London')).toHaveBeenCalled();
-
-  //   // spyOn(weatherComponent, 'weatherDetails$').and.returnValue( of ({
-  //   //   data: ({
-  //   //     name: 'London',
-  //   //     avgTemp: 38,
-  //   //     windStrength: 39
-  //   //   })
-  //   // }));
-  //   // spyOn(weatherComponent, 'hourlyCityWeatherDetails$').and.returnValue( of ({
-  //   //   data: ({
-  //   //     timeStamp: 20,
-  //   //     avgTemp: 38,
-  //   //     windStrength: 39
-  //   //   })
-  //   // }));
-
-  //   // expect(weatherComponent.dataLoading).toBe(true);
-
-  // });
 });

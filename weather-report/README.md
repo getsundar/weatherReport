@@ -34,17 +34,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 npm install
 npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular application (http://localhost:4200/)
 
-### Components flow
+## Components flow
 
-   # app.component 
+   ### app.component 
 
      ---   weather-report.component lazy loaded in the router-outlet
 
-   # weather-report.component 
+   ### weather-report.component 
 
     --- added with data-grid.component (reusuable component used to list the city and hourly weather report)
 
-   # data-grid.component 
+   ### data-grid.component 
 
     --- has the following inputs 
 
@@ -78,8 +78,8 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
     
     ## shared/selectors.ts
 
-    -- it contains the Ngrx selectors that filter out the details that are to be rendered in the reporting table
+        -- it contains the Ngrx selectors that filter out the details that are to be rendered in the reporting table and remove the cities with error code
 
     ## shared/async-observable-helpers
 
-    -- unit test mocking async data
+        -- unit test mocking async data

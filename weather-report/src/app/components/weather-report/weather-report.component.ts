@@ -41,7 +41,7 @@ import {
 })
 export class WeatherReportComponent implements OnInit, OnDestroy {
   public weatherDetails$: Observable < any > ;
-  public hourlyCityWeatherDetails$: Observable < any > ;
+  // public hourlyCityWeatherDetails$: Observable < any > ;
   public hourlyWeatherShown = false;
   public displayedWeatherColumns: ColumnProp[] = WEATHER_COLUMNS;
   public displayedHourlyColumns: ColumnProp[] = HOURLY_WEATHER_COLUMNS;
@@ -51,12 +51,13 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
   public inValidCities = [];
   public ngUnsubscribe: Subject < void > = new Subject < void > ();
   public buttonLabel = 'Hourly Details';
+  public readonly hourlyCityWeatherDetails$ = this.store.select(hourlyWeatherDetails);
   constructor(public store: Store < AppState > ) {}
   ngOnInit() {
     this.store.dispatch(new LoadWeatherAction());
     this.weatherDetails$ = this.store.select(selectWeatherDetails);
     this.store.select('weather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((weatherData) => {
-      this.dataLoading = weatherData.loading;
+      this.dataLoading = weatherData && weatherData.loading || false;
     });
   }
   onShowingHourlyDetails(cityNameToGetDetails) {
@@ -66,7 +67,6 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
     this.store.dispatch(new LoadHourlyWeatherAction({
       cityName: this.citySelected
     }));
-    this.hourlyCityWeatherDetails$ = this.store.select(hourlyWeatherDetails);
     // showing the hourly weather report grid by subscring to the data
     this.store.select('hourlyWeather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((hourlyWeatherData) => {
       if (!hourlyWeatherData.error) {

@@ -7,9 +7,8 @@ import {
   ofType
 } from '@ngrx/effects';
 import {
-  map,
-  mergeMap,
-  catchError
+  catchError,
+  switchMap
 } from 'rxjs/operators';
 import {
   of
@@ -24,24 +23,15 @@ import {
   WeatherService
 } from '../services/weather.service';
 
-
 @Injectable()
 export class WeatherEffects {
-
-  @Effect() loadWeather$ = this.actions$
-    .pipe(
-      ofType < LoadWeatherAction > (WeatherActionTypes.LOAD_WEATHER_DATA),
-      mergeMap(
-        () => this.weatherService.getWeatherData()
-        .pipe(
-          map(data => {
-            return new LoadWeatherSuccessAction(data);
-          }),
-          catchError(error => of (new LoadWeatherFailureAction(error)))
-        )
-      ),
-    );
-
+  @Effect()
+  loadWeather$ = this.actions$.pipe(
+    ofType < LoadWeatherAction > (WeatherActionTypes.LOAD_WEATHER_DATA),
+    switchMap(() => this.weatherService.getWeatherData()),
+    switchMap(weatherDetails => of (new LoadWeatherSuccessAction(weatherDetails))),
+    catchError(error => of (new LoadWeatherFailureAction(error)))
+  );
   constructor(
     private actions$: Actions,
     private weatherService: WeatherService

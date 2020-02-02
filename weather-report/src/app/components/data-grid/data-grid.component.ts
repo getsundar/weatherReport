@@ -23,17 +23,17 @@ export class DataGridComponent implements OnInit {
   @Input() displayedColumns: ColumnProp[];
   @Input() showAction;
   @Input() buttonLabel;
-  @Output() showHourlyDetails: EventEmitter < any > = new EventEmitter();
+  @Output() showDetails: EventEmitter < any > = new EventEmitter();
   public columnsToDisplay = [];
   ngOnInit() {
-    this.displayedColumns.forEach(column => this.columnsToDisplay.push(column.prop));
+    this.columnsToDisplay = this.displayedColumns.map(column => column.prop);
     // action column is shown or hidden with the inputs
     if (this.showAction) {
       this.columnsToDisplay.push('actions');
     }
   }
-  onShowingHourlyDetails(cityToShow) {
-    this.showHourlyDetails.emit(cityToShow);
+  onShowDetails(cityToShow) {
+    this.showDetails.emit(cityToShow);
   }
 
 }

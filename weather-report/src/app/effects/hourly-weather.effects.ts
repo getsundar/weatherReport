@@ -7,9 +7,9 @@ import {
   ofType
 } from '@ngrx/effects';
 import {
-  map,
   catchError,
-  switchMap
+  switchMap,
+  pluck
 } from 'rxjs/operators';
 import {
   of
@@ -26,20 +26,13 @@ import {
 
 @Injectable()
 export class HourlyWeatherEffects {
-
   @Effect() loadHourlyWeather$ = this.actions$
     .pipe(
       ofType < LoadHourlyWeatherAction > (HourlyWeatherActionTypes.LOAD_HOURLY_WEATHER_DATA),
-      switchMap(
-        (action) => this.hourlyWeatherService.getHourlyWeatherDetails(action.payload)
-        .pipe(
-          map(data => {
-            return new LoadHourlyWeatherSuccessAction(data);
-          }),
-          catchError(error => of (new LoadHourlyWeatherFailureAction(error)))
-        )
-      ),
-    );
+      pluck('payload'),
+      switchMap((hourlyWeather) => this.hourlyWeatherService.getHourlyWeatherDetails(hourlyWeather)),
+      switchMap(cityHourlyWeather => of (new LoadHourlyWeatherSuccessAction(cityHourlyWeather))),
+      catchError(error => of (new LoadHourlyWeatherFailureAction(error))));
 
   constructor(
     private actions$: Actions,

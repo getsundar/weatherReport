@@ -34,7 +34,6 @@ import {
 import {
   MatTableModule
 } from '@angular/material/table';
-
 import {
   HourlyWeatherReducer
 } from './reducers/hourly-weather.reducers';
@@ -50,7 +49,6 @@ import {
 import {
   DataGridComponent
 } from './components/data-grid/data-grid.component';
-
 import {
   MatPaginatorModule
 } from '@angular/material/paginator';

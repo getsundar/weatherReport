@@ -2,7 +2,7 @@
 <div *ngIf="errorMessage!==''" class="errorMessage">{{errorMessage}}</div>
 <mat-card *ngIf="!hourlyWeatherShown">
   <app-data-grid [dataToRender$]='weatherDetails$ | async' [displayedColumns]='displayedWeatherColumns'
-    (showHourlyDetails)="onShowingHourlyDetails($event)" [showAction]="true" [buttonLabel]='buttonLabel'>
+    (showDetails)="onShowingHourlyDetails($event)" [showAction]="true" [buttonLabel]='buttonLabel'>
   </app-data-grid>
 </mat-card>
 <div *ngIf="hourlyWeatherShown">
