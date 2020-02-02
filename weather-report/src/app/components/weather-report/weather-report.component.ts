@@ -41,10 +41,9 @@ import {
 })
 export class WeatherReportComponent implements OnInit, OnDestroy {
   public weatherDetails$: Observable < any > ;
-  // public hourlyCityWeatherDetails$: Observable < any > ;
   public hourlyWeatherShown = false;
-  public displayedWeatherColumns: ColumnProp[] = WEATHER_COLUMNS;
-  public displayedHourlyColumns: ColumnProp[] = HOURLY_WEATHER_COLUMNS;
+  public readonly displayedWeatherColumns: ColumnProp[] = WEATHER_COLUMNS;
+  public readonly displayedHourlyColumns: ColumnProp[] = HOURLY_WEATHER_COLUMNS;
   public dataLoading = false;
   public citySelected = '';
   public errorMessage = '';
@@ -52,7 +51,9 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
   public ngUnsubscribe: Subject < void > = new Subject < void > ();
   public buttonLabel = 'Hourly Details';
   public readonly hourlyCityWeatherDetails$ = this.store.select(hourlyWeatherDetails);
+
   constructor(public store: Store < AppState > ) {}
+
   ngOnInit() {
     this.store.dispatch(new LoadWeatherAction());
     this.weatherDetails$ = this.store.select(selectWeatherDetails);
@@ -71,9 +72,7 @@ export class WeatherReportComponent implements OnInit, OnDestroy {
     this.store.select('hourlyWeather').pipe(takeUntil(this.ngUnsubscribe)).subscribe((hourlyWeatherData) => {
       if (!hourlyWeatherData.error) {
         this.dataLoading = hourlyWeatherData.loading;
-        if (!this.dataLoading) {
-          this.hourlyWeatherShown = true;
-        }
+        (this.dataLoading === false) ? this.hourlyWeatherShown = true: this.hourlyWeatherShown = false;
       } else {
         this.errorMessage = hourlyWeatherData.error.message;
         this.dataLoading = false;

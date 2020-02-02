@@ -99,7 +99,6 @@ describe('WeatherReportComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WeatherReportComponent);
     weatherComponent = fixture.componentInstance;
-    fixture.detectChanges();
     store.setState(mockHourlyWeatherState);
   });
 
