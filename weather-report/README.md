@@ -38,7 +38,7 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
 
    ### app.component 
 
-     ---   weather-report.component lazy loaded in the router-outlet
+     --- weather-report.component lazy loaded in the router-outlet
 
    ### weather-report.component 
 
@@ -56,7 +56,7 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
 
     --- has the following events
 
-            * showHourlyDetails - to load the hourly weather report
+            * showDetails - to load the hourly weather report of the selceted city
 
 
 ### Other details
@@ -71,10 +71,9 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
 
                         -- it contains the Appstate.
                         
-
     ## assets/constants.ts
     
-        -- it consists of some details lile city names and the columns to render on the data-grid component
+        -- it consists of details like city names and the columns to render on the data-grid component
     
     ## shared/selectors.ts
 
@@ -83,3 +82,7 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
     ## shared/async-observable-helpers
 
         -- unit test mocking async data
+
+    ## shared/utils
+    
+        -- contains utility methods for data manipulation (filtering from selector)

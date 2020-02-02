@@ -6,7 +6,7 @@
   </app-data-grid>
 </mat-card>
 <div *ngIf="hourlyWeatherShown">
-  <h1>{{citySelected}}</h1>
+  <h2>{{citySelected}}</h2>
   <mat-card>
     <div class="table-container">
       <app-data-grid [dataToRender$]='hourlyCityWeatherDetails$ | async' [displayedColumns]='displayedHourlyColumns'
