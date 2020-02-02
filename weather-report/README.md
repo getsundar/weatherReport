@@ -59,7 +59,7 @@ npm run dev -- runs the node server (http://127.0.0.1:9000/) with the angular ap
             * showDetails - to load the hourly weather report of the selceted city
 
 
-### Other details
+## Other details
 
     ## server.js - Node server
 
